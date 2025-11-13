@@ -1,0 +1,44 @@
+#include <iostream>
+using namespace std;
+
+struct Student {
+    int rollNo;
+    char name[50];
+    float marks;
+};
+
+int main() {
+    Student s[10];
+    int n = 10;
+
+    cout << "Enter details of 10 students:\n";
+    for (int i = 0; i < n; i++) {
+        cout << "\nEnter Roll No: ";
+        cin >> s[i].rollNo;
+        cout << "Enter Name: ";
+        cin >> s[i].name;
+        cout << "Enter Marks: ";
+        cin >> s[i].marks;
+    }
+
+    // Bubble Sort by Marks
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (s[j].marks > s[j + 1].marks) {
+                // Swap
+                Student temp = s[j];
+                s[j] = s[j + 1];
+                s[j + 1] = temp;
+            }
+        }
+    }
+
+    cout << "\nStudent Data After Sorting (by Marks):\n";
+    cout << "Roll No\tName\tMarks\n";
+    cout << "-------------------------\n";
+    for (int i = 0; i < n; i++) {
+        cout << s[i].rollNo << "\t" << s[i].name << "\t" << s[i].marks << endl;
+    }
+
+    return 0;
+}

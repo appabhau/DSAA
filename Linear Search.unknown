@@ -1,0 +1,44 @@
+#include <iostream>
+using namespace std;
+
+struct Student {
+    int rollNo;
+    char name[50];
+    float marks;
+};
+
+int main() {
+    Student s[10];
+    int n = 10;
+    int searchRoll, found = 0;
+
+    cout << "Enter details of 10 students:\n";
+    for (int i = 0; i < n; i++) {
+        cout << "\nEnter Roll No: ";
+        cin >> s[i].rollNo;
+        cout << "Enter Name: ";
+        cin >> s[i].name;
+        cout << "Enter Marks: ";
+        cin >> s[i].marks;
+    }
+
+    cout << "\nEnter Roll No to search: ";
+    cin >> searchRoll;
+
+    // Linear Search
+    for (int i = 0; i < n; i++) {
+        if (s[i].rollNo == searchRoll) {
+            cout << "\nStudent Found!\n";
+            cout << "Roll No: " << s[i].rollNo << endl;
+            cout << "Name: " << s[i].name << endl;
+            cout << "Marks: " << s[i].marks << endl;
+            found = 1;
+            break;
+        }
+    }
+
+    if (!found)
+        cout << "\nStudent with Roll No " << searchRoll << " not found!\n";
+
+    return 0;
+}

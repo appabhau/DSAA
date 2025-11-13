@@ -1,0 +1,60 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+struct Item {
+    int weight;
+    int profit;
+};
+
+// Function to compare profit/weight ratio
+bool compare(Item a, Item b) {
+    double r1 = (double)a.profit / a.weight;
+    double r2 = (double)b.profit / b.weight;
+    return r1 > r2; // Sort in decreasing order
+}
+
+// Function to get maximum profit
+double fractionalKnapsack(Item arr[], int n, int capacity) {
+    sort(arr, arr + n, compare);
+
+    double totalProfit = 0.0;
+    int currentWeight = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (currentWeight + arr[i].weight <= capacity) {
+            // Take full item
+            currentWeight += arr[i].weight;
+            totalProfit += arr[i].profit;
+        } else {
+            // Take only a fraction of the item
+            int remain = capacity - currentWeight;
+            totalProfit += arr[i].profit * ((double)remain / arr[i].weight);
+            break; // Knapsack is full
+        }
+    }
+    return totalProfit;
+}
+
+int main() {
+    int n, capacity;
+    cout << "Enter number of orders: ";
+    cin >> n;
+
+    Item orders[50];
+    cout << "Enter profit and weight of each order:\n";
+    for (int i = 0; i < n; i++) {
+        cout << "Order " << i + 1 << " profit: ";
+        cin >> orders[i].profit;
+        cout << "Order " << i + 1 << " weight: ";
+        cin >> orders[i].weight;
+    }
+
+    cout << "Enter total shipping capacity: ";
+    cin >> capacity;
+
+    double maxProfit = fractionalKnapsack(orders, n, capacity);
+    cout << "\nMaximum Profit (by shipping partial orders): " << maxProfit << endl;
+
+    return 0;
+}

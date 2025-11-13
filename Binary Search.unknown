@@ -1,0 +1,51 @@
+#include <iostream>
+using namespace std;
+
+struct Student {
+    int rollNo;
+    char name[50];
+    float marks;
+};
+
+int main() {
+    Student s[10];
+    int n = 10;
+    int searchRoll, found = 0;
+
+    cout << "Enter details of 10 students (in sorted order by Roll No):\n";
+    for (int i = 0; i < n; i++) {
+        cout << "\nEnter Roll No: ";
+        cin >> s[i].rollNo;
+        cout << "Enter Name: ";
+        cin >> s[i].name;
+        cout << "Enter Marks: ";
+        cin >> s[i].marks;
+    }
+
+    cout << "\nEnter Roll No to search: ";
+    cin >> searchRoll;
+
+    int low = 0, high = n - 1, mid;
+
+    // Binary Search
+    while (low <= high) {
+        mid = (low + high) / 2;
+        if (s[mid].rollNo == searchRoll) {
+            cout << "\nStudent Found!\n";
+            cout << "Roll No: " << s[mid].rollNo << endl;
+            cout << "Name: " << s[mid].name << endl;
+            cout << "Marks: " << s[mid].marks << endl;
+            found = 1;
+            break;
+        }
+        else if (s[mid].rollNo < searchRoll)
+            low = mid + 1;
+        else
+            high = mid - 1;
+    }
+
+    if (!found)
+        cout << "\nStudent with Roll No " << searchRoll << " not found!\n";
+
+    return 0;
+}

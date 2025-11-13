@@ -1,0 +1,37 @@
+#include<iostream>
+using namespace std;
+struct student{
+    int rollno;
+    char name[50];
+    float marks;
+};
+int main(){
+    student s[4],temp;
+    int n=4;
+    cout<<"Enter details of 4 students:\n";
+    for(int i=0;i<n;i++){
+        cout<<"Enter Roll No:";
+        cin>>s[i].rollno;
+        cout<<"Enter Name:";
+        cin>>s[i].name;
+        cout<<"Enter Marks:";
+        cin>>s[i].marks;
+    }
+    for(int i=0;i<n-1;i++){
+        int midIndex=i;
+        for(int j=i+1;j<n;j++){
+            if(s[j].marks<s[midIndex].marks){
+                midIndex=j;
+            }
+        }
+        temp=s[i];
+        s[i]=s[midIndex];
+        s[midIndex]=temp;
+    }
+    cout<<"Students data after sorting:\n";
+    cout<<"Roll No\tname\tMarks";
+    for(int i=0;i<n;i++){
+        cout<<s[i].rollno<<"\t"<<s[i].name<<"\t"<<s[i].marks<<"\t"<<endl;
+    }
+    return 0;
+}   

@@ -1,0 +1,61 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+struct Edge {
+    int src, dest, weight;
+};
+
+// To find parent of a node
+int findParent(int v, int parent[]) {
+    if (parent[v] == v)
+        return v;
+    return findParent(parent[v], parent);
+}
+
+// To unite two sets
+void unionSets(int u, int v, int parent[]) {
+    int a = findParent(u, parent);
+    int b = findParent(v, parent);
+    parent[a] = b;
+}
+
+// Kruskal’s Algorithm
+int main() {
+    int V, E;
+    cout << "Enter number of vertices and edges: ";
+    cin >> V >> E;
+
+    Edge edges[E];
+    cout << "Enter each edge (source destination weight):\n";
+    for (int i = 0; i < E; i++) {
+        cin >> edges[i].src >> edges[i].dest >> edges[i].weight;
+    }
+
+    // Sort edges by weight
+    sort(edges, edges + E, [](Edge a, Edge b) {
+        return a.weight < b.weight;
+    });
+
+    int parent[V];
+    for (int i = 0; i < V; i++)
+        parent[i] = i;
+
+    cout << "\nEdges in the Minimum Spanning Tree:\n";
+    int totalWeight = 0;
+
+    for (int i = 0; i < E; i++) {
+        int u = findParent(edges[i].src, parent);
+        int v = findParent(edges[i].dest, parent);
+
+        if (u != v) {
+            cout << edges[i].src << " -- " << edges[i].dest
+                 << " == " << edges[i].weight << endl;
+            totalWeight += edges[i].weight;
+            unionSets(u, v, parent);
+        }
+    }
+
+    cout << "Total weight of MST: " << totalWeight << endl;
+    return 0;
+}

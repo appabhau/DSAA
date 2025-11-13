@@ -1,0 +1,130 @@
+#include <iostream>
+using namespace std;
+
+// Node structure for linked list
+struct Node {
+    int data;
+    Node* next;
+};
+
+// Stack class
+class Stack {
+    Node* top; // pointer to top of stack
+
+public:
+    Stack() {
+        top = NULL;
+    }
+
+    // Push operation
+    void push(int value) {
+        Node* newNode = new Node;
+        if (!newNode) {
+            cout << "Stack Overflow (No Memory)!\n";
+            return;
+        }
+        newNode->data = value;
+        newNode->next = top;
+        top = newNode;
+        cout << value << " pushed to stack.\n";
+    }
+
+    // Pop operation
+    void pop() {
+        if (isEmpty()) {
+            cout << "Stack Underflow! (No elements to pop)\n";
+            return;
+        }
+        Node* temp = top;
+        cout << top->data << " popped from stack.\n";
+        top = top->next;
+        delete temp;
+    }
+
+    // Peek operation
+    void peek() {
+        if (isEmpty()) {
+            cout << "Stack is empty!\n";
+            return;
+        }
+        cout << "Top element: " << top->data << endl;
+    }
+
+    // Check if stack is empty
+    bool isEmpty() {
+        return (top == NULL);
+    }
+
+    // Check if stack is full
+    bool isFull() {
+        Node* temp = new Node;
+        if (temp == NULL)
+            return true;
+        delete temp;
+        return false;
+    }
+
+    // Display all elements
+    void display() {
+        if (isEmpty()) {
+            cout << "Stack is empty!\n";
+            return;
+        }
+        Node* temp = top;
+        cout << "Stack elements:\n";
+        while (temp != NULL) {
+            cout << temp->data << " ";
+            temp = temp->next;
+        }
+        cout << endl;
+    }
+};
+
+// Main function
+int main() {
+    Stack s;
+    int choice, value;
+
+    do {
+        cout << "\n------ Stack Menu ------\n";
+        cout << "1. Push\n2. Pop\n3. Peek\n4. IsEmpty\n5. IsFull\n6. Display\n7. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+        case 1:
+            cout << "Enter value to push: ";
+            cin >> value;
+            s.push(value);
+            break;
+        case 2:
+            s.pop();
+            break;
+        case 3:
+            s.peek();
+            break;
+        case 4:
+            if (s.isEmpty())
+                cout << "Stack is Empty.\n";
+            else
+                cout << "Stack is not Empty.\n";
+            break;
+        case 5:
+            if (s.isFull())
+                cout << "Stack is Full.\n";
+            else
+                cout << "Stack is not Full.\n";
+            break;
+        case 6:
+            s.display();
+            break;
+        case 7:
+            cout << "Exiting...\n";
+            break;
+        default:
+            cout << "Invalid choice! Try again.\n";
+        }
+    } while (choice != 7);
+
+    return 0;
+}
